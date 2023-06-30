@@ -1,0 +1,3 @@
+// Override paths for EXT:fluid_styled_content
+styles.templates.templateRootPath = EXT:site-distribution/Resources/Private/Templates/
+styles.templates.partialRootPath = EXT:site-distribution/Resources/Private/Partials/

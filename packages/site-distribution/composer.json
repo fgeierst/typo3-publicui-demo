@@ -1,0 +1,16 @@
+{
+  "name": "typo3/site-distribution",
+  "type": "typo3-cms-extension",
+  "description" : "TYPO3 CMS Distribution - Site Distribution Package",
+  "license": "GPL-2.0-or-later",
+  "autoload": {
+    "psr-4": {
+      "Site\\Distribution\\": "Classes/"
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "site-distribution"
+    }
+  }
+}

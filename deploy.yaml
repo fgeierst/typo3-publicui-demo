@@ -1,0 +1,95 @@
+# Deployer Docs https://deployer.org/docs/7.x/basics
+import:
+  - recipe/typo3.php
+  - contrib/rsync.php
+
+config:
+  repository: '.'
+  typo3_webroot: 'public'
+  rsync:
+    exclude:
+      - '.Build'
+      - '.git'
+      - '.gitlab'
+      - '.ddev'
+      - '.deployer'
+      - '.idea'
+      - '.DS_Store'
+      - '.gitlab-ci.yml'
+      - '.npm'
+      - 'deploy.yaml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'node_modules/'
+      - 'var/'
+      - 'public/fileadmin/'
+      - 'public/typo3temp/'
+      - 'config/system/additional.php'
+    exclude-file: false
+    include:
+      - 'packages/site_distribution/Resources/Public'
+    include-file: false
+    filter: {  }
+    filter-file: false
+    filter-perdir: false
+    flags: rz
+    options: [delete, keep-dirlinks, links]
+    timeout: 600
+  # Symlink folders to shared/* (persistent data)
+  shared_dirs:
+    - '{{typo3_webroot}}/fileadmin'
+    - '{{typo3_webroot}}/uploads'
+    - '{{typo3_webroot}}/typo3temp'
+    - '{{typo3_webroot}}/_assets'
+    - 'var'
+  # Symlink config file to shared/config/system/settings.php
+  shared_files:
+    - 'config/system/settings.php'
+  composer_options: ' --no-dev --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader'
+  writable_mode: 'chmod'
+  writable_dirs: [ '{{typo3_webroot}}/fileadmin', '{{typo3_webroot}}/typo3temp', '{{typo3_webroot}}/typo3conf', '{{typo3_webroot}}/uploads', 'var' ]
+  bin/composer: '{{bin/php}} /usr/bin/composer'
+
+hosts:
+  staging:
+    remote_user: <ssh username>
+    deploy_path: '<target deployment location on the server>'
+    rsync_src: './'
+    ssh_multiplexing: false
+    php_version: '8.1'
+  production:
+    remote_user: <ssh username>
+    deploy_path: '<target deployment location on the server>'
+    rsync_src: './'
+    ssh_multiplexing: false
+    php_version: '8.1'
+
+tasks:
+  typo3:extension:setup:
+    - cd: '{{release_path}}'
+    - run: '{{bin/php}} vendor/bin/typo3 extension:setup'
+  typo3:cache:warmup:
+    - cd: '{{release_path}}'
+    - run: '{{bin/php}} vendor/bin/typo3 cache:warmup'
+  typo3:cache:flush:
+    - cd: '{{release_path}}'
+    - run: '{{bin/php}} vendor/bin/typo3 cache:flush'
+  deploy:
+    - deploy:info
+    - deploy:setup
+    - deploy:lock
+    - deploy:release
+    - rsync
+    - deploy:shared
+    - deploy:writable
+    - deploy:vendors
+    - deploy:symlink
+    - typo3:extension:setup
+    - typo3:cache:flush
+    - typo3:cache:warmup
+    - deploy:unlock
+    - deploy:cleanup
+    - deploy:success
+
+after:
+  deploy:failed: deploy:unlock

@@ -1,0 +1,25 @@
+# IDE
+/.idea
+/.nbproject
+/.vscode
+# Package Manager
+/.npm
+/node_modules
+/vendor
+# TYPO3
+/var/*
+!/var/labels
+/public/*
+!/public/.htaccess
+!/public/typo3conf
+/public/typo3conf/*
+/config/system/settings.php
+/.php-cs-fixer.cache
+/packages/site-distribution/Resources/Public
+# DDEV - ignore files created by "ddev get torenware/ddev-viteserve"
+/.ddev/.allow-upgrade
+/.ddev/docker-compose.viteserve.yaml
+/.ddev/.env-frag
+/.ddev/web-build/Dockerfile.ddev-viteserve
+/.ddev/viteserve
+/.ddev/commands/web/vite-serve

@@ -1,0 +1,37 @@
+#! /usr/bin/env bash
+
+set -eu -o pipefail
+
+# TYPO3 setup defaults:
+username="admin"
+password="Password.1"
+
+# Vite add-on: provides "ddev vite-serve {start|stop}}" command
+addonOutput=$(ddev get torenware/ddev-viteserve 2>&1) || (echo "$addonOutput" && exit 1)
+
+ddev start
+ddev composer install
+
+ddev typo3 setup \
+    --driver=mysqli \
+    --host=db \
+    --dbname=db \
+    --port=3306 \
+    --username=db \
+    --password=db \
+    --admin-username=$username \
+    --admin-user-password=$password \
+    --admin-email="typo3@example.com" \
+    --force -n
+
+# Prepare frontend
+ddev npm install
+ddev npm run build:production
+
+# Initialize data
+ddev typo3 extension:setup
+ddev composer dumpautoload
+
+echo "TYPO3 is ready at ${DDEV_PRIMARY_URL}"
+echo "      Username: ${username}"
+echo "      Password: ${password}"

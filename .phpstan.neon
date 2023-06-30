@@ -1,0 +1,7 @@
+parameters:
+  level: 6
+  paths:
+    - packages
+  excludePaths:
+    - packages/some_path/*
+  ignoreErrors:

@@ -1,0 +1,20 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<nav class="menu-container">
+    <f:link.page pageUid="1" class="logo" title="{f:translate(extensionName: 'site-distribution', key: 'site-distribution.welcome')}">
+        <core:icon identifier="site-logo" size="small" alternativeMarkupIdentifier="inline" />
+    </f:link.page>
+    <ul class="menu js-menu">
+        <f:for each="{mainNavigation}" as="item">
+            <f:render partial="Menu" arguments="{item}"/>
+        </f:for>
+    </ul>
+
+    <div class="made-with js-made-with"><!-- svg loader example --></div>
+</nav>
+
+<div class="content">
+    <f:render section="Main"/>
+</div>
+
+</html>

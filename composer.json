@@ -1,0 +1,75 @@
+{
+	"name": "typo3/gitlab-project-template",
+	"description" : "TYPO3 CMS Distribution - Gitlab Project Template",
+	"license": "GPL-2.0-or-later",
+	"type": "project",
+	"config": {
+		"allow-plugins": {
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
+		},
+		"platform": {
+			"php": "8.1"
+		},
+		"sort-packages": true
+	},
+	"repositories": {
+		"local-packages": {
+			"type": "path",
+			"url": "packages/*"
+		}
+	},
+	"require": {
+		"praetorius/vite-asset-collector": "^1.0",
+		"typo3/cms-backend": "^12",
+		"typo3/cms-belog": "^12",
+		"typo3/cms-beuser": "^12",
+		"typo3/cms-core": "^12",
+		"typo3/cms-dashboard": "^12",
+		"typo3/cms-extbase": "^12",
+		"typo3/cms-extensionmanager": "^12",
+		"typo3/cms-felogin": "^12",
+		"typo3/cms-filelist": "^12",
+		"typo3/cms-fluid": "^12",
+		"typo3/cms-fluid-styled-content": "^12",
+		"typo3/cms-form": "^12",
+		"typo3/cms-frontend": "^12",
+		"typo3/cms-impexp": "^12",
+		"typo3/cms-info": "^12",
+		"typo3/cms-install": "^12",
+		"typo3/cms-rte-ckeditor": "^12",
+		"typo3/cms-seo": "^12",
+		"typo3/cms-setup": "^12",
+		"typo3/cms-sys-note": "^12",
+		"typo3/cms-t3editor": "^12",
+		"typo3/cms-tstemplate": "^12",
+		"typo3/cms-viewpage": "^12",
+		"typo3/site-distribution": "@dev"
+	},
+	"require-dev": {
+		"deployer/deployer": "^7.0",
+		"phpstan/phpstan": "^1.9",
+		"typo3/coding-standards": "^0.5.5"
+	},
+	"scripts":{
+		"runner:test": [
+			"gitlab-runner --version || (echo -e \"\\033[31mGitlab Runner is not installed, see https://docs.gitlab.com/runner/install/#binaries\\033[m\" && exit 1)"
+		],
+		"runner:assets": [
+			"@runner:test",
+			"gitlab-runner exec docker \"build_assets\" --docker-volumes `pwd`:/builds/project-0 --env GIT_STRATEGY=\"none\""
+		],
+		"runner:install": [
+			"@runner:test",
+			"gitlab-runner exec docker \"package_install\" --docker-volumes `pwd`:/builds/project-0 --env GIT_STRATEGY=\"none\""
+		],
+		"runner:phpstan": [
+			"@runner:test",
+			"gitlab-runner exec docker \"phpstan\" --docker-volumes `pwd`:/builds/project-0 --env GIT_STRATEGY=\"none\""
+		],
+		"runner:fixer": [
+			"@runner:test",
+			"gitlab-runner exec docker \"php_cs_fixer\" --docker-volumes `pwd`:/builds/project-0 --env GIT_STRATEGY=\"none\""
+		]
+	}
+}

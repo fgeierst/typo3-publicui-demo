@@ -1,0 +1,12 @@
+<li class="menu__item {f:if(condition: '{active}', then: 'menu__active')}">
+    <a class="menu__link" href="{link}">
+        {title}
+    </a>
+    <f:if condition="{children}">
+        <ul class="menu__submenu">
+            <f:for as="children" each="{children}">
+                <f:render partial="Menu" arguments="{children}"/>
+            </f:for>
+        </ul>
+    </f:if>
+</li>

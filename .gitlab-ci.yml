@@ -1,0 +1,104 @@
+stages:
+  - build
+  - test
+  - deploy
+
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - vendor/
+    - .npm/
+
+build_assets:
+  stage: build
+  image: node:18
+  when: always
+  script:
+    # "npm ci" is preferred in automated environments,
+    # but only works when a package-lock.json exists!
+    # - npm ci --cache .npm --prefer-offline
+    - npm install --cache .npm --prefer-offline
+    - npm run build:production
+  artifacts:
+    name: Site_Assets
+    paths:
+      - packages/site_distribution/Resources/Public
+    expire_in: 1h
+    untracked: true
+
+package_install:
+  stage: build
+  image: composer:2.4
+  when: always
+  script:
+    # @todo: Once we have a TYPO3 recommended image containing composer and all requirements
+    #        this should be replaced by a regular "composer install"
+    - composer install --ignore-platform-reqs
+
+phpstan:
+  stage: test
+  image: php:8.1-cli-alpine
+  when: always
+  needs:
+    - package_install
+  script:
+    - ./vendor/bin/phpstan analyse -c .phpstan.neon --no-progress
+
+php_cs_fixer:
+  stage: test
+  image: php:8.1-cli-alpine
+  when: always
+  needs:
+    - package_install
+  script:
+    - ./vendor/bin/php-cs-fixer fix --dry-run --diff
+
+.add_ssh: &add_ssh
+  before_script:
+    # Add packages required to connect via ssh to copy files
+    - apk update && apk add openssh-client rsync
+    # Run ssh-agent (inside the build environment)
+    - eval $(ssh-agent -s)
+    # Add ssh key variable SSH_PRIVATE_KEY in the project settings -> CI/CD -> Variables
+    - echo -e "$SSH_PRIVATE_KEY" > /tmp/.key
+    - chmod 600 /tmp/.key
+    - ssh-add /tmp/.key
+    - mkdir -p ~/.ssh
+    # Using "StrictHostKeyChecking no" is not ideal!
+    # In a production evironment it's recommended to set "SSH_KNOWN_HOSTS" in project settings -> CI/CD -> Variables
+    # and uncomment the following line:
+    # - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  image: php:8.1-cli-alpine
+  stage: deploy
+  needs:
+    - phpstan
+    - php_cs_fixer
+    - build_assets
+
+deploy_to_staging:
+  <<: *add_ssh
+  environment:
+    name: staging
+    url: https://your-staging-domain.com
+  script:
+    # Example command to deploy to "staging" environment, see deploy.yaml
+    # - ./vendor/bin/dep deploy -vvv staging
+    - echo "Please enable the above command and configure deploy.yaml -> hosts -> staging"
+    - ./vendor/bin/dep --version
+  only:
+    - main
+
+deploy_to_production:
+  <<: *add_ssh
+  environment:
+    name: production
+    url: https://your-domain.com
+  when: always
+  script:
+    # Example command to deploy to "production" environment, see deploy.yaml
+    # - ./vendor/bin/dep deploy -vvv production
+    - echo "Please enable the above command and configure deploy.yaml -> hosts -> production"
+    - ./vendor/bin/dep --version
+  only:
+    - production

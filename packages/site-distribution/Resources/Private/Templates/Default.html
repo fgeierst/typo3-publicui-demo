@@ -1,0 +1,22 @@
+<html
+    data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:vac="http://typo3.org/ns/Praetorius/ViteAssetCollector/ViewHelpers"
+>
+
+<f:layout name="{f:if(condition: '{layout}', then: '{layout}', else: 'Default')}"/>
+
+<f:section name="Main">
+    <main role="main">
+        <f:format.html parseFuncTSPath="lib.parseFunc">{normal}</f:format.html>
+    </main>
+</f:section>
+
+<f:section name="FooterAssets">
+    <vac:asset.vite
+        manifest="EXT:site-distribution/Resources/Public/manifest.json"
+        entry="assets/JavaScript/app.js"
+    />
+</f:section>
+
+</html>
