@@ -1,9 +1,9 @@
-// Scss entrypoint
 import "../Scss/app.scss";
 
-// Use vite-svg-loader, see https://www.npmjs.com/package/vite-svg-loader#user-content-import-params
-import typo3Logo from '../Image/Icon/typo3.svg?url'
-document.querySelector('.js-made-with').innerHTML = 'Made with <img width="20px" height="20px" src="' + typo3Logo + '" alt="TYPO3">'
+import { register } from '@public-ui/components';
+import { defineCustomElements } from '@public-ui/components/dist/loader';
+import { ITZBund } from '@public-ui/themes';
 
-// TYPO3.lang contains all available inline labels
-console.log("Say hi! " + TYPO3.lang["site-distribution.welcome"]);
+register([ITZBund], defineCustomElements)
+  .then(() => {})
+  .catch(console.warn);
