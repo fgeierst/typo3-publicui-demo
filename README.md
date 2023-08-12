@@ -5,72 +5,34 @@ Demonstation how to use Public UI Kolibri web components in an TYPO3 project.
 - https://github.com/public-ui/kolibri
 - Based on https://gitlab.com/gitlab-org/project-templates/typo3-distribution/
 
-## Quickstart
 
-Use this command to set up the template
+## Prerequisites
+- Docker Desktop or Colima
+- DDEV
+- Mutagen needs to be enabled for HMR
 
- * `ddev typo3-init`
+## Local installation guide
+    git clone https://github.com/fgeierst/typo3-publicui-demo.git
+    cd typo3-publicui-demo
+    ddev start
+    ddev composer install
+    ddev snapshot restore --latest
+    ddev pnpm install
+    ddev pnpm build:production
 
-## All commands - manual setup
+Login via https://typo3-publicui-demo.ddev.site/typo3 using these credentials:
 
-Configure ddev, install packages and start the ddev instance:
+- Username: `admin`
+- Password: `Password.1`
 
-```
-ddev start
-ddev composer install
-ddev typo3 setup
-```
+## Start Vite development server
 
-Prepare and build frontend:
+    ddev vite-serve start
 
-```
-ddev npm install
-ddev npm run build:production
-```
+## Test the production build
 
-Initialize data (page tree and link assets):
+    ddev vite-serve stop
+    ddev pnpm build:production
 
-```
-ddev typo3 extension:setup
-ddev composer dumpautoload
-```
-
-## Use Vite.js [dev server for ddev](https://github.com/torenware/ddev-viteserve#getting-started)
-
-```
-ddev get torenware/ddev-viteserve
-ddev restart
-ddev vite-serve start
-```
-
-## Files and folders
-
-The folder `packages` contains all your local extension/packages.
-Require these packages simply by using `composer req vendor/package:@dev`
-
-`assets` contains all scss, javascript, images and fonts which will be processed
-by [Vite.js](https://vitejs.dev/) and stored in `packages/site-distribution/Resources/Public/`.
-
-## Npm Scripts / Vite.js
-
-The frontend toolchain uses NPM and Vite.js with a few loaders to ...
-  * Compile scss to css (`assets/Scss`)
-  * Bundle javascript (`assets/JavaScript`)
-  * Copy images (`assets/Image`) and fonts (`assets/Fonts`) to the Public folder of EXT:site-distribution
-
-Watch for changes in js/scss files:
-```
-npm run watch
-```
-
-Build JS, CSS for development use (not compressed/optimized):
-```
-npm run build:development
-```
-
-Build JS, CSS for production use:
-```
-npm run build:production
-```
 
 
