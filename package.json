@@ -17,11 +17,11 @@
     "@public-ui/components": "^1.5.3",
     "@public-ui/themes": "^1.5.3",
     "autoprefixer": "^10.4.14",
-    "postcss-loader": "^7.3.0",
-    "postcss-preset-env": "^8.4.1",
-    "sass": "^1.62.1",
-    "vite": "^4.3.9",
-    "vite-plugin-static-copy": "^0.15.0",
+    "postcss-loader": "^7.3.3",
+    "postcss-preset-env": "^9.1.1",
+    "sass": "^1.65.1",
+    "vite": "^4.4.9",
+    "vite-plugin-static-copy": "^0.17.0",
     "vite-svg-loader": "^4.0.0"
   }
 }
