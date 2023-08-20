@@ -14,8 +14,8 @@
     "npm": "~9"
   },
   "dependencies": {
-    "@public-ui/components": "^1.5.3",
-    "@public-ui/themes": "^1.5.3",
+    "@public-ui/components": "1.6.0-rc.28",
+    "@public-ui/themes": "1.6.0-rc.28",
     "autoprefixer": "^10.4.14",
     "postcss-loader": "^7.3.3",
     "postcss-preset-env": "^9.1.1",
