@@ -27,6 +27,9 @@ export default defineConfig(({command, mode}) => {
         input: 'assets/JavaScript/app.js',
       },
       outDir: 'packages/site-distribution/Resources/Public/',
+      dynamicImportVarsOptions: {
+        exclude: []
+      },
     },
     css: {
       devSourcemap: true,
