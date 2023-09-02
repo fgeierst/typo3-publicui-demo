@@ -1,7 +1,3 @@
-# IDE
-/.idea
-/.nbproject
-/.vscode
 # Package Manager
 /.npm
 /node_modules
