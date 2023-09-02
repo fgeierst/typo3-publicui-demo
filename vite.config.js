@@ -14,7 +14,11 @@ export default defineConfig(({command, mode}) => {
           {
             src: path.resolve(__dirname, './assets/Image') + '/[!.]*',
             dest: 'Image'
-          }
+          },
+          {
+            src: path.resolve(__dirname, './node_modules/@public-ui/components/dist/kolibri') + '/[!.]*',
+            dest: 'public-ui'
+          },
         ]
       })
     ],
