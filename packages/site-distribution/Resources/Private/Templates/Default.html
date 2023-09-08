@@ -1,41 +1,42 @@
-<html
-    data-namespace-typo3-fluid="true"
-    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-    xmlns:vac="http://typo3.org/ns/Praetorius/ViteAssetCollector/ViewHelpers"
->
+<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:vac="http://typo3.org/ns/Praetorius/ViteAssetCollector/ViewHelpers">
 
-<f:layout name="{f:if(condition: '{layout}', then: '{layout}', else: 'Default')}"/>
+<f:layout name="{f:if(condition: '{layout}', then: '{layout}', else: 'Default')}" />
 
 <f:section name="HeaderAssets">
 
-    <vac:asset.vite
-        manifest="EXT:site-distribution/Resources/Public/manifest.json"
-        entry="assets/JavaScript/app.js"
-        priority="1"
-    />
+    <vac:asset.vite manifest="EXT:site-distribution/Resources/Public/manifest.json" entry="assets/JavaScript/app.js"
+        priority="1" />
 
-    <f:asset.css identifier="public-ui-icons" href="EXT:site-distribution/Resources/Public/public-ui/assets/codicons/codicon.css" />
-    <f:asset.script identifier="public-ui-loader" type="module" src="EXT:site-distribution/Resources/Public/public-ui/kolibri.esm.js" />
+    <f:asset.css identifier="public-ui-icons"
+        href="EXT:site-distribution/Resources/Public/public-ui/assets/codicons/codicon.css" />
+    <f:asset.script identifier="public-ui-loader" type="module"
+        src="EXT:site-distribution/Resources/Public/public-ui/kolibri.esm.js" />
 
 </f:section>
 
 <f:section name="Main">
 
-    <main role="main" data-theme="ecl-eu">
+    <main role="main" >
+
         <f:format.html parseFuncTSPath="lib.parseFunc">{normal}</f:format.html>
         <kol-button _label="Button" data-theme="default"></kol-button>
 
         <kol-card _label="Testtitel" _has-footer _max-height="vh2">
             <div slot="header">Text im Header-Bereich</div>
             <div slot="content">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
-                dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos
-                et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua.
+                At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                magna aliquyam erat, sed diam voluptua. At vero eos
+                et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+                Lorem ipsum dolor sit amet.
             </div>
             <div slot="footer">
                 Weiterer Beispieltext im Fuß-Bereich
-                <kol-button _label="Learn more about plublic-ui" ></kol-button>
+                <kol-button _label="Learn more about plublic-ui"></kol-button>
             </div>
         </kol-card>
 
