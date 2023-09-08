@@ -2,6 +2,8 @@
 
 Demonstation how to use Public UI Kolibri web components in an TYPO3 project.
 
+![Screenshot of TYPO3 frontend with public-ui navigation and a secondary button component](screenshot.jpg)
+
 - https://github.com/public-ui/kolibri
 - Based on https://gitlab.com/gitlab-org/project-templates/typo3-distribution/
 
