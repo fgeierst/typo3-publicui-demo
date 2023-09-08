@@ -1,3 +1,29 @@
-body, html {
+:root {
+  --color-surface: hsla(226, 72%, 45%, 1);
+  --color-text-on-surface: hsla(0, 0%, 100%, 1);
+}
+
+body {
     font-family: system-ui;
+}
+
+.menu-container {
+    background-color: var(--color-surface);
+    color: var(--color-text-on-surface);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    & img {
+       display: block;
+    }
+}
+
+.logo {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    font-size: 1.5rem;
 }

@@ -4,7 +4,7 @@
 		<header/>
 		<body>
 			<trans-unit id="site-distribution.welcome" resname="site-distribution.welcome">
-				<source>Welcome to TYPO3</source>
+				<source>TYPO3 and public-ui</source>
 			</trans-unit>
 		</body>
 	</file>

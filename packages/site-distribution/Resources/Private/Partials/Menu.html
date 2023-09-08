@@ -1,39 +1,9 @@
-
-<f:comment>
-    <f:debug>{_all}</f:debug>
-</f:comment>
-
-
-
 <kol-nav _label="Navigation" _orientation="horizontal" _has-compact-button></kol-nav>
+
 <script>
-    const nav = document.querySelector('kol-nav');
-    const links = [
-        {
-            _href: '/',
-            _icon: 'codicon codicon-home',
-            _label: 'Startseite',
-            // _children: [
-            //     { _href: 'startseite/1-untermenuepunkt', _label: '1. Untermenüpunkt' },
-            //     { _href: 'startseite/2-untermenuepunkt', _label: '2. Untermenüpunkt' },
-            // ],
-        },
-        { _href: 'unterseite', _label: 'Unterseite' },
-        { _href: 'unterseite', _label: 'About' },
-        { _href: 'unterseite', _label: 'Kontakt' },
-    ];
-    nav._links = links;
-
-    // const menu = [
-    //     <f:for each='{mainNavigation}' as='item' iteration='inter'>
-    //         {
-    //             _label: '{item.title}',
-    //             _href: '{item.link}',
-    //         }
-    //     </f:for>
-    // ]
-    // console.log(menu);
-
+    const mainNavigation = {mainNavigation -> f:format.json() -> f:format.raw()}
+    const kolNav = document.querySelector('kol-nav');
+    kolNav._links = mainNavigation.map(item => ({ _label: item.title, _href: item.link }));
 </script>
 
 
